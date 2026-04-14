@@ -8,6 +8,12 @@ public sealed class Post
     public string? Descricao { get; set; }
     public DateTime? DataPost { get; set; }
     public DateTime DataCadastro { get; set; }
+    
+    // PDF Fields
+    public string? NomeArquivoPdf { get; set; }
+    public byte[]? ConteudoPdf { get; set; }
+    public string? ExplicacaoPdfJson { get; set; }
+    public DateTime? DataUploadPdf { get; set; }
 
     public Fonte? Fonte { get; set; }
 }

@@ -23,6 +23,7 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<IFonteService, FonteService>();
 builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IPdfExplanationService, PdfExplanationService>();
 
 var app = builder.Build();
 

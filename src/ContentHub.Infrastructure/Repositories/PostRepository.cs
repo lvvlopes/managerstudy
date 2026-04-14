@@ -50,6 +50,12 @@ public sealed class PostRepository(ContentHubDbContext context) : IPostRepositor
         return context.Posts.AddAsync(post, cancellationToken).AsTask();
     }
 
+    public Task UpdateAsync(Post post, CancellationToken cancellationToken = default)
+    {
+        context.Posts.Update(post);
+        return Task.CompletedTask;
+    }
+
     public Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         return context.SaveChangesAsync(cancellationToken);
