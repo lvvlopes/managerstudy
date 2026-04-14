@@ -1,0 +1,55 @@
+@model ContentHub.Web.ViewModels.EditarPostViewModel
+
+@{
+    ViewData["Title"] = "Editar post";
+}
+
+<section class="form-page">
+    <div class="form-heading">
+        <p class="eyebrow">Edição</p>
+        <h1>Editar post</h1>
+        <p>Atualize a fonte, o link, a descrição ou a data do post salvo.</p>
+    </div>
+
+    <form class="content-form" asp-action="EditarPost" asp-route-id="@Model.Id" method="post">
+        @Html.AntiForgeryToken()
+        <input asp-for="Id" type="hidden" />
+
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+        <div class="field-group">
+            <label asp-for="FonteId"></label>
+            <select asp-for="FonteId" asp-items="Model.Fontes">
+                <option value="0">Selecione uma fonte</option>
+            </select>
+            <span asp-validation-for="FonteId"></span>
+        </div>
+
+        <div class="field-group">
+            <label asp-for="Url"></label>
+            <input asp-for="Url" />
+            <span asp-validation-for="Url"></span>
+        </div>
+
+        <div class="field-group">
+            <label asp-for="Descricao"></label>
+            <textarea asp-for="Descricao" rows="5"></textarea>
+            <span asp-validation-for="Descricao"></span>
+        </div>
+
+        <div class="field-group">
+            <label asp-for="DataPost"></label>
+            <input asp-for="DataPost" />
+            <span asp-validation-for="DataPost"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit">Salvar alterações</button>
+            <a asp-controller="Home" asp-action="Index">Voltar ao feed</a>
+        </div>
+    </form>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

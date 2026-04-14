@@ -1,0 +1,114 @@
+@model ContentHub.Web.ViewModels.FeedViewModel
+
+@{
+    ViewData["Title"] = "Feed";
+    var categoriaAtiva = Model.Categorias.FirstOrDefault(categoria => categoria.IsActive)?.DisplayName;
+}
+
+<section class="feed-header">
+    <div>
+        <p class="eyebrow">Feed consolidado</p>
+        <h1>Posts salvos em um só lugar</h1>
+    </div>
+    <div class="feed-actions">
+        <a class="primary-link" asp-controller="Content" asp-action="NovoPost">Salvar post</a>
+        <a class="secondary-link" asp-controller="Content" asp-action="NovaFonte">Nova fonte</a>
+        <a class="secondary-link" asp-controller="Content" asp-action="NovaCategoria">Nova categoria</a>
+        <div class="feed-count">
+            <strong>@Model.Posts.Count</strong>
+            <span>@(Model.Posts.Count == 1 ? "post" : "posts")</span>
+        </div>
+    </div>
+</section>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <section class="success-notice">
+        @successMessage
+    </section>
+}
+
+@if (TempData["ErrorMessage"] is string errorMessage)
+{
+    <section class="notice">
+        <strong>Algo não deu certo.</strong>
+        <span>@errorMessage</span>
+    </section>
+}
+
+<section class="filters" aria-label="Categorias">
+    <a class="filter-chip @(string.IsNullOrWhiteSpace(Model.CategoriaSelecionada) ? "active" : string.Empty)"
+       asp-controller="Home"
+       asp-action="Index">
+        Todas
+    </a>
+
+    @foreach (var categoria in Model.Categorias)
+    {
+        <a class="filter-chip @(categoria.IsActive ? "active" : string.Empty)"
+           asp-controller="Home"
+           asp-action="Index"
+           asp-route-categoria="@categoria.QueryValue">
+            @categoria.DisplayName
+        </a>
+    }
+</section>
+
+@if (!Model.ApiDisponivel)
+{
+    <section class="notice">
+        <strong>Fonte indisponível.</strong>
+        <span>Verifique se a API está ativa em @Model.ApiBaseUrl.</span>
+    </section>
+}
+
+@if (!string.IsNullOrWhiteSpace(categoriaAtiva))
+{
+    <p class="active-context">Categoria: <strong>@categoriaAtiva</strong></p>
+}
+
+@if (Model.Posts.Count == 0)
+{
+    <section class="empty-state">
+        <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=900&q=80" alt="" />
+        <div>
+            <h2>Nenhum post por aqui ainda</h2>
+            <p>Quando novos links forem salvos, eles aparecem neste feed.</p>
+        </div>
+    </section>
+}
+else
+{
+    <section class="post-grid" aria-label="Posts">
+        @foreach (var post in Model.Posts)
+        {
+            <article class="post-card">
+                <a class="post-image-link" href="@post.Url" target="_blank" rel="noopener noreferrer" aria-label="Abrir post no Instagram">
+                    <img class="post-image" src="@post.ResolvedImagemUrl" alt="" loading="lazy" />
+                </a>
+
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span class="category-badge">@post.CategoriaDisplay</span>
+                        @if (post.DataPost.HasValue)
+                        {
+                            <time datetime="@post.DataPost.Value.ToString("yyyy-MM-dd")">
+                                @post.DataPost.Value.ToString("dd/MM/yyyy")
+                            </time>
+                        }
+                    </div>
+
+                    <h2>@(string.IsNullOrWhiteSpace(post.Descricao) ? "Post salvo" : post.Descricao)</h2>
+                    <p class="source">@post.Fonte</p>
+
+                    <a class="post-action" href="@post.Url" target="_blank" rel="noopener noreferrer">
+                        Abrir no Instagram
+                    </a>
+                    <a class="edit-action" asp-controller="Content" asp-action="EditarPost" asp-route-id="@post.Id">
+                        Editar
+                    </a>
+                </div>
+            </article>
+        }
+    </section>
+}

@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ContentHub.API/ContentHub.API.csproj" />
+    <Project Path="src/ContentHub.Application/ContentHub.Application.csproj" />
+    <Project Path="src/ContentHub.Domain/ContentHub.Domain.csproj" />
+    <Project Path="src/ContentHub.Infrastructure/ContentHub.Infrastructure.csproj" />
+    <Project Path="src/ContentHub.Web/ContentHub.Web.csproj" />
+  </Folder>
+</Solution>

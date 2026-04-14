@@ -1,0 +1,48 @@
+# Binaries and Build results
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.o
+
+# Visual Studio
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Entity Framework
+*.db
+*.db-shm
+*.db-wal
+
+# Environment
+.env
+.env.local
+appsettings.Development.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Misc
+*.log
+*.tmp
+.cache/
